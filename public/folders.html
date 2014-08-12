@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div style="margin: 0 auto; width: 70%;">
+      <h1>Gallery</h1>
+      <p></p>
+      <ul class="nav nav-pills nav-stacked">
+      </ul>
+      </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+    $(function() {
+      $.get("folders.json", function(data) {
+
+        var path,
+            nav = $('ul.nav'),
+            info;
+
+        for (path in data) {
+          info = data[path];
+          nav.append('<li><a href=\"' + path + '\" style="color: ' + (info.isEmpty ? '#B9B9B9' : '#2a6496') + ';"><i class="fa fa-folder-o"></i> ' + info.title + '</a></li>')
+        }
+      });
+    });
+    </script>
+  </body>
+</html>

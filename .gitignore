@@ -1,0 +1,5 @@
+node_modules
+rename.js
+public/photos/*
+.htpasswd
+.DS_Store
