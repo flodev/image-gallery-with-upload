@@ -2,7 +2,8 @@ image-gallery-with-upload
 =========================
 
 An image gallery with upload functionality.
-Just hin npm install.
+
+Just hit npm install.
 
 Then make two symlinks:
 
