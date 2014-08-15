@@ -36,6 +36,10 @@ logError = function(err) {
 app.use(express.static('public'));
 
 
+// fix safari 304 bug
+app.disable('etag');
+
+
 // app.use(bodyParser.json());
 //
 // app.use(bodyParser.urlencoded({

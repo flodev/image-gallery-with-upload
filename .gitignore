@@ -3,3 +3,4 @@ rename.js
 public/photos/*
 .htpasswd
 .DS_Store
+public/blueimp*
