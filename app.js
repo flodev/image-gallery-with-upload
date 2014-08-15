@@ -7,19 +7,20 @@ var fs = require('fs'),
     Busboy = require('busboy'),
     bodyParser,
     logError,
-    folders = JSON.parse(fs.readFileSync('folders.json').toString("utf-8")),
+    folders = JSON.parse(fs.readFileSync(__dirname + '/folders.json').toString("utf-8")),
     app = express(),
     getFoldersWithStatus = function() {
       var folderName,
           statusFolders = {},
           photoFolder = "public/photos",
           isEmpty = function(folderName) {
-            var folderPath = path.join(photoFolder, folderName);
+            var folderPath = path.join(__dirname, photoFolder, folderName);
             if (!fs.existsSync(folderPath)) {
               return true;
             }
             return fs.readdirSync(folderPath).length == 0;
           };
+
       for (folderName in folders) {
         statusFolders[folderName] = {
           title: folders[folderName],
@@ -33,7 +34,7 @@ logError = function(err) {
   return console.log(_.isObject(err) ? err.stack : err);
 };
 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 
 // fix safari 304 bug
@@ -63,7 +64,7 @@ default
  */
 
 app.get('/', function(req, res) {
-  fs.readFile('public/folders.html', function(err, data) {
+  fs.readFile(__dirname + '/public/folders.html', function(err, data) {
     res.send(data.toString("utf-8"));
   });
 });
@@ -75,7 +76,7 @@ gallery
 (function() {
   var folder,
       folderFunction = function(req, res) {
-        fs.readFile('public/gallery.html', function(err, data) {
+        fs.readFile(__dirname + '/public/gallery.html', function(err, data) {
           res.send(data.toString("utf-8"));
         });
       };
@@ -101,7 +102,7 @@ app.get('/imagenames/*', function(req, res) {
   if (!folders[photoFolderName]) {
     return res.send(500, "unknown image folder name: " + photoFolderName);
   }
-  fs.readdir("public/photos/" + photoFolderName, function(err, files) {
+  fs.readdir(__dirname + "/public/photos/" + photoFolderName, function(err, files) {
     var filenames = {}, i, filename, filenameWithoutExtension;
 
     for (i in files) {
@@ -133,7 +134,7 @@ app.post("/upload/*", function(req, res) {
       return res.send(500, "unknown image folder name: " + photoFolderName);
     }
     var busboy = new Busboy({ headers: req.headers }),
-        dir = "public/photos/" + photoFolderName;
+        dir = __dirname + "/public/photos/" + photoFolderName;
 
     // make sure folder exists
     if (!fs.existsSync(dir)) {
